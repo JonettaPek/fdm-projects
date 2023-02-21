@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Patient Registration</title>
+</head>
+<body>
+	
+	<header>
+		<h1>Patient Registration form</h1>
+	</header>
+
+	<main>
+		<form method="post" action="register-patient">
+			<label for="fname">First name: </label>
+			<input id="fname" type="text" name="first-name" placeholder="First Name" required/>
+			<br>
+			
+			<label for="lname">Last name: </label>
+			<input id="lname" type="text" name="last-name" placeholder="Last Name" required/>
+			<br>
+			
+			<label for="add">Address: </label>
+			<input id="add" type="text" name="address" placeholder="Address"  required/>
+			<br>
+			
+			<label for="dob">Date Of Birth: </label>
+			<input id="dob" type="date" name="date-of-birth" min="1900-01-01" max="2023-02-16" required/>
+			<br>
+			
+			<label for="mail">Email: </label>
+			<input id="mail" type="email" name="e-mail" placeholder="Email" required/>
+			<br>
+			
+			<label for="pw">Password: </label>
+			<input id="pw" type="password" name="password" placeholder="Password" required/>
+			<span>	</span>
+			<input type="password" name="confirm-password" placeholder="Confirm Password" required/>
+			<br>
+			
+			<input type="submit" value="REGISTER" />
+			
+		</form>
+	</main>
+
+	
+</body>
+</html>
