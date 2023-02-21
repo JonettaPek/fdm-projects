@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cancel Appointment</title>
+</head>
+<body>
+
+	<header>
+		<h1>Upcoming Appointments</h1>
+	</header>
+	
+	<main>
+	
+		<div th:if="${appointments} eq null">
+			<p>No appointments to cancel</p>
+		</div>
+		
+		
+		<div th:if="${appointments} neq null" th:each="appointment : ${appointments}">
+			<span>Appointment ID: </span><p th:text="${appointment.appointmentID}"/>
+			<span>Date: </span><p th:text="${appointment.dateOfVisit}"/>
+			<span>Time: </span><p th:text="${appointment.timeOfVisit}"/>
+			<span>Location: </span><p th:text="${appointment.location}"/>
+			<br>
+		</div>
+		
+		<form action="cancel-an-appointment" method="post" >
+		
+			<div th:if="${appointments} neq null">
+			
+				<label>Select an appointment to cancel: </label>
+				<label th:each="appointment : ${appointments}" th:text="${appointment.appointmentID}">
+					<input type="radio" name="appointment-id" value="${appointment.appointmentID}" required/> 
+				</label>
+				<br>
+				
+				<input type="submit" value="CONFIRM" />
+				
+			</div>
+
+		</form>
+		
+	</main>
+
+</body>
+</html>
