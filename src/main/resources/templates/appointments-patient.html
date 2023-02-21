@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Schedule</title>
+</head>
+<body>
+
+	<header>
+		<h1>Upcoming Appointments</h1>
+	</header>
+	
+	<nav>
+	
+
+		
+	</nav>
+	
+	<main>
+	
+		<div th:if="${appointments} eq null">
+			<p>No appointments</p>
+		</div>
+		
+		<div th:if="${appointments} neq null" th:each="appointment : ${appointments}">
+			<span>Appointment ID: </span><p th:text="${appointment.appointmentID}"/>
+			<span>Date: </span><p th:text="${appointment.dateOfVisit}"/>
+			<span>Time: </span><p th:text="${appointment.timeOfVisit}"/>
+			<span>Location: </span><p th:text="${appointment.location}"/>
+			<br>
+		</div>
+		
+		<div>
+			<h3>Need to make a change?</h3>
+			<ul>
+				<li>Cancel an <a href="cancel-an-appointment">appointment</a></li>
+				<li>Reschedule an <a href="reschedule-an-appointment">appointment</a></li>
+			</ul>
+		</div>
+	
+<!--  		<table>
+			<thead>
+				<tr>
+					<td>Timeslot</td>
+					<td>Monday</td>
+					<td>Tuesday</td>
+					<td>Wednesday</td>
+					<td>Thursday</td>
+					<td>Friday</td>
+					<td>Saturday</td>
+					<td>Sunday</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>09:00 - 10:00</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>10:00 - 11:00</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>11:00 - 12:00</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>13:00 - 14:00</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>14:00 - 15:00</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>15:00 - 16:00</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+-->
+	
+	</main>
+	
+</body>
+</html>
