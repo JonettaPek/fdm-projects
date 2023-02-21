@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Book an appointment</title>
+</head>
+<body>
+
+	<header>
+		<h1>Select a time slot</h1>
+	</header>
+	
+	<main>
+		<form method="post" action="book-an-appointment">
+			
+			<label for="date">Select a date: </label>
+			<input id="date" name="date-of-visit" type="date" min="2023-01-01" max="2023-02-20" required>
+			<br>
+			
+			<label>Select a timeslot: </label><br>
+			<label><input type="radio" name="time-of-visit" value="9-10" required/> 09:00 - 10:00</label><br>
+			<label><input type="radio" name="time-of-visit" value="10-11" required/> 10:00 - 11:00</label><br>
+			<label><input type="radio" name="time-of-visit" value="11-12" required/> 11:00 - 12:00</label><br>
+			<label><input type="radio" name="time-of-visit" value="13-14" required/> 13:00 - 14:00</label><br>
+			<label><input type="radio" name="time-of-visit" value="14-15" required/> 14:00 - 15:00</label><br>
+			<label><input type="radio" name="time-of-visit" value="15-16" required/> 15:00 - 16:00</label><br>
+			
+			<label for="locatn">Select a branch: </label>
+			<input id="locatn" list="options" name="location">
+			<datalist id="options">
+			  <option value="Branch A" />
+			  <option value="Branch B" />
+			  <option value="Branch C" />
+			  <option value="Branch D" />
+			  <option value="Branch E" />
+			  <option value="Branch F" />
+			</datalist>
+			<br>
+			
+			<input type="submit" value="BOOK"/>
+			
+		</form>
+	</main>
+	
+</body>
+</html>
