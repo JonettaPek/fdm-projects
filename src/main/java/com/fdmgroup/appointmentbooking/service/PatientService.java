@@ -19,6 +19,10 @@ public class PatientService {
 		this.patientRepository = patientRepository;
 	}
 
+	
+	
+	
+	
 	public boolean emailExists(String email) {
 		return patientRepository.findByEmail(email).isPresent();
 	}
@@ -39,6 +43,10 @@ public class PatientService {
 		return false;
 	}
 	
+	
+	
+	
+	
 	public boolean registrationSuccessful(Patient patient, String email, String password, String confirmPassword) {
 		if (emailDoesNotExist(email) && bothPasswordsMatch(password, confirmPassword)) {
 			patientRepository.save(patient);
@@ -54,16 +62,34 @@ public class PatientService {
 		return false;
 	}
 	
+	
+	
+	
+	public Patient retrievePatientById(long patientID) {
+		Optional<Patient> retrievedPatient = patientRepository.findById(patientID);
+		if (retrievedPatient.isPresent()) {
+			return retrievedPatient.get();
+		}
+		return new Patient();
+	}
+	
 	public Patient retrievePatientByEmail(String email) {
 		Optional<Patient> retrievedPatient = patientRepository.findByEmail(email);
 		if (retrievedPatient.isPresent()) {
 			return retrievedPatient.get();
 		}
-		
 		return new Patient();
 	}
 	
-//	public void 
+	public long retrieveIdByEmail(String email) {
+		Optional<Patient> retrievedPatient = patientRepository.findByEmail(email);
+		if (retrievedPatient.isPresent()) {
+			return retrievedPatient.get().getPatientID();
+		}
+		return 0;
+	}
+	
+	
 	
 	
 	

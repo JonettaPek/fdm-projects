@@ -103,10 +103,13 @@ public class WebsiteController {
 			@RequestParam("password") String password,
 			@RequestParam("user-type") String userType,
 			HttpSession loginSession) {
+		String[] parsedEmail = email.toUpperCase().split("@");
+		String username = parsedEmail[0];
 		
 		loginSession.setAttribute("email", email);
 		loginSession.setAttribute("password", password);
 		loginSession.setAttribute("usertype", userType);
+		loginSession.setAttribute("username", username);
 
 		if (userType.equals("patient")) {
 			

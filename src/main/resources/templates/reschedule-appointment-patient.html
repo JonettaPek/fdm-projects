@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thyneleaf.org">
+
 <head>
 <meta charset="UTF-8">
-<title>Cancel Appointment</title>
+<title>Reschedule Appointment</title>
 </head>
-<body>
 
+<body>
 	<header>
 
 	</header>
@@ -29,7 +30,7 @@
 			<form action="cancel-an-appointment" method="post" >
 				<label>Select an appointment to cancel: </label>
 				<span th:each="appointment : ${appointments}">
-					<input type="radio" name="appointment-id" th:string="" th:value="${appointment.appointmentID}" required/>
+					<input type="radio" name="appointment-id" value="${appointment.appointmentID}" required/>
 					<label th:text="${appointment.appointmentID}"></label> 
 				</span>
 				<br>
@@ -38,6 +39,7 @@
 			</form>
 		</div>
 	</main>
-
+	
 </body>
+
 </html>
