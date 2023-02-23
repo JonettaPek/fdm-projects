@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fdmgroup.appointmentbooking.model.DataTransferObject;
+import com.fdmgroup.appointmentbooking.service.CalendarService;
 import com.fdmgroup.appointmentbooking.service.DoctorService;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,36 +17,40 @@ import jakarta.servlet.http.HttpSession;
 public class DoctorController {
 
 	private final DoctorService doctorService;
+	private final CalendarService calendarService;
 
 	@Autowired
-	public DoctorController(DoctorService doctorService) {
+	public DoctorController(DoctorService doctorService, CalendarService calendarService) {
 		super();
 		this.doctorService = doctorService;
+		this.calendarService = calendarService;
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/{username}")
 	public String goToDoctorHomePage(HttpSession loginSession,
 			Model model) {
-		
 		String email = (String) loginSession.getAttribute("email");
 		String password = (String) loginSession.getAttribute("password");
-		String userType = (String) loginSession.getAttribute("usertype");
-		
 		if (doctorService.loginSuccessful(email, password)) {
-			
-			String[] parsedEmail = email.toUpperCase().split("@");
-			String username = parsedEmail[0];
-			
-			model.addAttribute("username", username);
-			model.addAttribute("greeting", "Welcome back, Dr. " + username + "!");
-			model.addAttribute("doctor", doctorService.retrieveDoctorByEmail(email));
-			model.addAttribute("email", email);
-			model.addAttribute("password", password);
-			model.addAttribute("usertype", userType);
-			
-			return "home-doctor";
+			model.addAttribute("retrievedDoctor", doctorService.retrieveDoctorByEmail(email));
+			loginSession.setAttribute("doctorID", doctorService.retrieveIdByEmail(email));
+			return "home";
 		}
 		return "redirect:/my-first-clinic/login";
 	}
 	
+//	@GetMapping("/view-appointments")
+//	public String viewAppointments(HttpSession loginSession,
+//			Model model) {
+//		long patientID = (Long) loginSession.getAttribute("patientID");
+//		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
+//		return "view-appointments";
+//	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession loginSession) {
+		loginSession.invalidate();
+		return "redirect:/my-first-clinic/";
+	}
+
 }

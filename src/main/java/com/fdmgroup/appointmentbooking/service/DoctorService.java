@@ -19,6 +19,9 @@ public class DoctorService {
 		this.doctorRepository = doctorRepository;
 	}
 
+	
+	
+	
 	public boolean emailExists(String email) {
 		return doctorRepository.findByEmail(email).isPresent();
 	}
@@ -39,6 +42,9 @@ public class DoctorService {
 		return false;
 	}
 	
+	
+	
+	
 	public boolean registrationSuccessful(Doctor doctor, String email, String password, String confirmPassword) {
 		if (emailDoesNotExist(email) && bothPasswordsMatch(password, confirmPassword)) {
 			doctorRepository.save(doctor);
@@ -54,13 +60,32 @@ public class DoctorService {
 		return false;
 	}
 	
+	
+	
+	
+	public Doctor retrieveDoctorById(long doctorID) {
+		Optional<Doctor> retrievedDoctor = doctorRepository.findById(doctorID);
+		if (retrievedDoctor.isPresent()) {
+			return retrievedDoctor.get();
+		}
+		return new Doctor();
+//		return retrievedDoctor.orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + doctorID + "does not exist"));
+	}
+	
 	public Doctor retrieveDoctorByEmail(String email) {
 		Optional<Doctor> retrievedDoctor = doctorRepository.findByEmail(email);
 		if(retrievedDoctor.isPresent()) {
 			return retrievedDoctor.get();
 		}
-		
 		return new Doctor();
+	}
+	
+	public long retrieveIdByEmail(String email) {
+		Optional<Doctor> retrievedDoctor = doctorRepository.findByEmail(email);
+		if (retrievedDoctor.isPresent()) {
+			return retrievedDoctor.get().getDoctorID();
+		}
+		return 0L;
 	}
 	
 }

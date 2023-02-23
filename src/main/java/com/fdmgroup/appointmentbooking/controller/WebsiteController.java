@@ -2,12 +2,17 @@ package com.fdmgroup.appointmentbooking.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.fdmgroup.appointmentbooking.model.DataTransferObject;
 import com.fdmgroup.appointmentbooking.model.Doctor;
 import com.fdmgroup.appointmentbooking.model.Patient;
 import com.fdmgroup.appointmentbooking.service.DoctorService;
@@ -30,93 +35,103 @@ public class WebsiteController {
 	}
 
 	@GetMapping("/")
+	@ResponseStatus(HttpStatus.OK)
 	public String goToMyFirstClinicWebsite() {
 		return "my-first-clinic";
 	}
 	
-	@GetMapping("/register-patient")
-	public String goToPatientRegistrationPage() {
-		return "patient-registration";
-	}
-	
-	@GetMapping("/register-doctor")
-	public String goToDoctorRegistrationPage() {
-		return "doctor-registration";
-	}
-	
-	@GetMapping("/login")
-	public String goToLoginPage() {
-		return "login";
+	@GetMapping("/register-{type}")
+	@ResponseStatus(HttpStatus.OK)
+	public String goToPatientRegistrationPage(@PathVariable("type") String type,
+			Model model,
+			HttpSession registerSession) {
+		String formattedType = String.valueOf(type.charAt(0)).toUpperCase() + type.substring(1);
+		model.addAttribute("type", formattedType);
+		model.addAttribute("newPatient", new Patient());
+		model.addAttribute("newDoctor", new Doctor());
+		model.addAttribute("registerStatus", (String) registerSession.getAttribute("registerStatus"));
+		return "registration";
 	}
 	
 	@PostMapping("/register-patient")
-	public String handlePatientRegistration(@RequestParam("first-name") String firstName,
-			@RequestParam("last-name") String lastName,
-			@RequestParam("address") String address,
-			@RequestParam("date-of-birth") String dateOfBirth,
-			@RequestParam("e-mail") String email, 
-			@RequestParam("password") String password, 
-			@RequestParam("confirm-password") String confirmPassword,
-			Patient patient) {
-		
-		patient.setFirstName(firstName.toUpperCase());
-		patient.setLastName(lastName.toUpperCase());
-		patient.setAddress(address);
-		patient.setDateOfBirth(dateOfBirth);
-		patient.setEmail(email);
-		patient.setPassword(password);
-		
-		if (patientService.emailExists(email) 
-				|| patientService.registrationSuccessful(patient, email, password, confirmPassword)) {
-			
+	@ResponseStatus(HttpStatus.CREATED)
+	public String handlePatientRegistration(@RequestParam("confirm-password") String confirmPassword,
+			Patient patient,
+			HttpSession registerSession,
+			Model model) {
+		String email = patient.getEmail();
+		String password = patient.getPassword();
+		if (patientService.emailExists(email)) {
+			registerSession.setAttribute("email", email);
+			registerSession.setAttribute("password", password);
+			registerSession.setAttribute("registerStatus", "success");
+			registerSession.setAttribute("registerInfoMessage", "Email exists, please log in.");
 			return "redirect:login";
 		}
-		
+		if (patientService.registrationSuccessful(patient, email, password, confirmPassword)) {
+			registerSession.setAttribute("email", email);
+			registerSession.setAttribute("password", password);
+			registerSession.setAttribute("registerStatus", "success");
+			registerSession.setAttribute("registerInfoMessage", "Register successfully, please log in.");
+			return "redirect:login";
+		}
+		registerSession.setAttribute("registerStatus", "fail");
 		return "redirect:register-patient";
 	}
 	
 	@PostMapping("/register-doctor")
-	public String handleDoctorRegistration(@RequestParam("first-name") String firstName,
-			@RequestParam("last-name") String lastName,
-			@RequestParam("e-mail") String email,
-			@RequestParam("password") String password,
-			@RequestParam("confirm-password") String confirmPassword,
-			@RequestParam("specialty") String specialty,
-			Doctor doctor) {
-		
-		doctor.setFirstName(firstName);
-		doctor.setLastName(lastName);
-		doctor.setEmail(email);
-		doctor.setPassword(password);
-		doctor.setSpecialty(specialty);
-		
-		if (doctorService.emailExists(email)
-				|| doctorService.registrationSuccessful(doctor, email, password, confirmPassword)) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public String handleDoctorRegistration(@RequestParam("confirm-password") String confirmPassword,
+			Doctor doctor,
+			HttpSession registerSession) {
+		String email = doctor.getEmail();
+		String password = doctor.getPassword();
+		if (doctorService.emailExists(email)) {
+			registerSession.setAttribute("email", email);
+			registerSession.setAttribute("password", password);
+			registerSession.setAttribute("registerStatus", "success");
+			registerSession.setAttribute("registerInfoMessage", "Email exists, please log in.");
 			return "redirect:login";
 		}
+		if (doctorService.registrationSuccessful(doctor, email, password, confirmPassword)) {
+			registerSession.setAttribute("email", email);
+			registerSession.setAttribute("password", password);
+			registerSession.setAttribute("registerStatus", "success");
+			registerSession.setAttribute("registerInfoMessage", "Register successfully, please log in.");
+			return "redirect:login";
+		}
+		registerSession.setAttribute("registerStatus", "fail");
 		return "redirect:register-doctor";
 		
 	}
 	
+	@GetMapping("/login")
+	@ResponseStatus(HttpStatus.OK)
+	public String goToLoginPage(HttpSession registerSession,
+			Model model) {
+		model.addAttribute("email", (String) registerSession.getAttribute("email"));
+		model.addAttribute("password", (String) registerSession.getAttribute("password"));
+		model.addAttribute("registerStatus", (String) registerSession.getAttribute("registerStatus"));
+		model.addAttribute("registerInfoMessage", (String) registerSession.getAttribute("registerInfoMessage"));
+		model.addAttribute("loginStatus", (String) registerSession.getAttribute("loginStatus"));
+		return "login";
+	}
+	
 	@PostMapping("/login")
+	@ResponseStatus(HttpStatus.OK)
 	public String handleLogin(@RequestParam("e-mail") String email,
 			@RequestParam("password") String password,
 			@RequestParam("user-type") String userType,
 			HttpSession loginSession) {
-		String[] parsedEmail = email.toUpperCase().split("@");
+		String[] parsedEmail = email.split("@");
 		String username = parsedEmail[0];
-		
+		loginSession.setAttribute("username", username);
 		loginSession.setAttribute("email", email);
 		loginSession.setAttribute("password", password);
 		loginSession.setAttribute("usertype", userType);
-		loginSession.setAttribute("username", username);
-
-		if (userType.equals("patient")) {
-			
-			return "redirect:/my-first-clinic/home-patient/";
+		if (userType.equalsIgnoreCase("patient")) {
+			return "redirect:/my-first-clinic/home-patient/" + username;
 		}
-		return "redirect:/my-first-clinic/home-doctor/";
-		
-
+		return "redirect:/my-first-clinic/home-doctor/" + username;
 	}
 }

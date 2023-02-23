@@ -1,15 +1,16 @@
 package com.fdmgroup.appointmentbooking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fdmgroup.appointmentbooking.model.Appointment;
-import com.fdmgroup.appointmentbooking.model.Patient;
 import com.fdmgroup.appointmentbooking.service.CalendarService;
 import com.fdmgroup.appointmentbooking.service.PatientService;
 
@@ -30,93 +31,82 @@ public class PatientController {
 		this.calendarService = calendarService;
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/{username}")
+	@ResponseStatus(HttpStatus.OK)
 	public String goToPatientHomePage(HttpSession loginSession,
 			Model model) {
-		
 		String email = (String) loginSession.getAttribute("email");
 		String password = (String) loginSession.getAttribute("password");
-		
 		if (patientService.loginSuccessful(email, password)) {
-			
-			String username = (String) loginSession.getAttribute("username");
-			model.addAttribute("greeting", "Welcome back, " + username + "!");
-			
-			loginSession.setAttribute("patient", patientService.retrievePatientByEmail(email));
+			loginSession.setAttribute("loginStatus", "success");
 			loginSession.setAttribute("patientID", patientService.retrieveIdByEmail(email));
-			
-			return "home-patient";
+			model.addAttribute("retrievedPatient", patientService.retrievePatientByEmail(email));
+			return "home";
 		}
+		loginSession.setAttribute("loginStatus", "fail");
 		return "redirect:/my-first-clinic/login";
 	}
 
 	@GetMapping("/book-an-appointment")
-	public String goToBookingPage() {
-		return "new-appointment";
-	}
-	
-	@GetMapping("/view-appointments")
-	public String viewAppointments(HttpSession loginSession,
-			Model model) {
-		long patientID = (Long) loginSession.getAttribute("patientID");
-		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
-		return "appointments-patient";
-	}
-	
-	@GetMapping("/cancel-an-appointment")
-	public String deleteAppointment(HttpSession loginSession,
-			Model model) {
-		long patientID = (Long) loginSession.getAttribute("patientID");
-		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
-		return "delete-appointment-patient";
-	}
-	
-	@GetMapping("/reschedule-an-appointment")
-	public String rescheduleAppointment(HttpSession loginSession,
-			Model model) {
-		long patientID = (Long) loginSession.getAttribute("patientID");
-		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
-		return "reschedule-appointment-patient";
+	@ResponseStatus(HttpStatus.OK)
+	public String goToBookingPage(Model model) {
+		model.addAttribute("appointment", new Appointment());
+		return "new-booking";
 	}
 	
 	@PostMapping("/book-an-appointment")
-	public String handleNewAppointment(@RequestParam("date-of-visit") String dateOfVisit,
-			@RequestParam("time-of-visit") String timeOfVisit,
-			@RequestParam("location") String location,
-			Appointment appointment,
-			HttpSession loginSession,
-			Model model) {
-		
+	@ResponseStatus(HttpStatus.CREATED)
+	public String handleNewAppointment(Appointment appointment,
+			HttpSession loginSession) {
 		long patientID = (Long) loginSession.getAttribute("patientID");
-		
-		appointment.setDateOfVisit(dateOfVisit);
-		appointment.setTimeOfVisit(timeOfVisit);
-		appointment.setLocation(location);
 		appointment.setPatient(patientService.retrievePatientById(patientID));
-		
+		String dateOfVisit = appointment.getDateOfVisit();
+		String timeOfVisit = appointment.getTimeOfVisit();
 		if (calendarService.bookSuccessfully(appointment, patientID, dateOfVisit, timeOfVisit)) {
-			return "redirect:/my-first-clinic/home-patient/";
+			loginSession.setAttribute("bookStatus", "success");
+			return "redirect:/my-first-clinic/home-patient/" + loginSession.getAttribute("username");
 		}
 		return "redirect:book-an-appointment";
 	}
 	
+	@GetMapping("/view-appointments")
+	@ResponseStatus(HttpStatus.OK)
+	public String viewAppointments(HttpSession loginSession,
+			Model model) {
+		long patientID = (Long) loginSession.getAttribute("patientID");
+		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
+		return "view-appointments";
+	}
+	
+	@GetMapping("/cancel-an-appointment")
+	@ResponseStatus(HttpStatus.OK)
+	public String deleteAppointment(HttpSession loginSession,
+			Model model) {
+		long patientID = (Long) loginSession.getAttribute("patientID");
+		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
+		return "delete-appointment";
+	}
+	
 	@PostMapping("/cancel-an-appointment")
 	public String handleCancellation(@RequestParam("appointment-id") String appointmentIdString,
-			HttpSession loginSession,
-			Model model) {
-		System.out.println(appointmentIdString);
+			HttpSession loginSession) {
 		Long appointmentID = Long.parseLong(appointmentIdString);
-		
-		long patientID = (Long) loginSession.getAttribute("patientID");
-		
 		Appointment appointment = calendarService.retrieveAppointmentByAppointmentId(appointmentID);
 		String dateOfVisit = appointment.getDateOfVisit();
 		String timeOfVisit = appointment.getTimeOfVisit();
-		
+		long patientID = (Long) loginSession.getAttribute("patientID");
 		if (calendarService.cancelSuccessfully(appointment, appointmentID, patientID, dateOfVisit, timeOfVisit)) {
-			return "redirect:/my-first-clinic/home-patient/";
+			loginSession.setAttribute("cancelStatus", "success");
+			return "redirect:/my-first-clinic/home-patient/" + loginSession.getAttribute("username");
 		}
 		return "redirect:cancel-an-appointment";
+	}
+	
+	@GetMapping("/logout")
+	@ResponseStatus(HttpStatus.OK)
+	public String logout(HttpSession loginSession) {
+		loginSession.invalidate();
+		return "redirect:/my-first-clinic/";
 	}
 	
 //	@PostMapping("/reschedule-an-appointment")
@@ -138,19 +128,13 @@ public class PatientController {
 //		}
 //		return "redirect:reschedule-an-appointment";
 //	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+//	
+//	@GetMapping("/reschedule-an-appointment")
+//	public String rescheduleAppointment(HttpSession loginSession,
+//			Model model) {
+//		long patientID = (Long) loginSession.getAttribute("patientID");
+//		model.addAttribute("appointments", calendarService.retrieveAppointmentsByPatientId(patientID));
+//		return "reschedule-appointment";
+//	}
+
 }

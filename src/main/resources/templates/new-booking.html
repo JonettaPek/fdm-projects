@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New Booking</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
+	rel="stylesheet" 
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
+	crossorigin="anonymous">
+</head>
+
+<body>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
+	crossorigin="anonymous"></script>
+	
+	<header>
+		<h1>Select a time slot</h1>
+	</header>
+	
+	<main>
+		<form method="post" th:action="@{book-an-appointment}" th:object="${appointment}">
+			<label for="date">Select a date: </label>
+			<input id="date" name="date-of-visit" th:field="*{dateOfVisit}" type="date" min="2023-01-01" max="2023-02-20" required>
+			<br>
+			
+			<label>Select a timeslot: </label><br>
+			<label><input type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="09:00-10:00" required/> 09:00 - 10:00</label><br>
+			<label><input type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="10:00-11:00" required/> 10:00 - 11:00</label><br>
+			<label><input type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="11:00-12:00" required/> 11:00 - 12:00</label><br>
+			<label><input type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="13:00-14:00" required/> 13:00 - 14:00</label><br>
+			<label><input type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="14:00-15:00" required/> 14:00 - 15:00</label><br>
+			<label><input type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="15:00-16:00" required/> 15:00 - 16:00</label><br>
+
+			<label class="form-label" for="locatn"><strong>Select a branch: </strong></label>
+			<select class="form-select" id="locatn" name="location">
+				<option th:field="*{location}" value="Branch A">Branch A</option>
+				<option th:field="*{location}" value="Branch B">Branch B</option>
+				<option th:field="*{location}" value="Branch C">Branch C</option>
+				<option th:field="*{location}" value="Branch D">Branch D</option>
+				<option th:field="*{location}" value="Branch E">Branch E</option>
+				<option th:field="*{location}" value="Branch F">Branch F</option>
+			</select>
+			
+			<input type="submit" value="Book"/>
+			
+<!--		Options are recommended but optional
+	
+  			<label for="locatn">Select a branch: </label>
+			<input id="locatn" list="options" name="location">
+			<datalist id="options">
+			  <option value="Branch A" />
+			  <option value="Branch B" />
+			  <option value="Branch C" />
+			  <option value="Branch D" />
+			  <option value="Branch E" />
+			  <option value="Branch F" />
+			</datalist>
+			<br>
+-->
+		</form>
+	</main>
+	
+</body>
+</html>

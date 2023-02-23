@@ -86,7 +86,7 @@ public class PatientService {
 		if (retrievedPatient.isPresent()) {
 			return retrievedPatient.get().getPatientID();
 		}
-		return 0;
+		return 0L;
 	}
 	
 	
