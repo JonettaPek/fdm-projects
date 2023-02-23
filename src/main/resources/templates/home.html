@@ -16,28 +16,36 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
 		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" 
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" 
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" 
+	integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" 
+	crossorigin="anonymous"></script>
 
 	<header>
-		
+		<div class="justify-content-center text-center">
+		  <img src="banner.jpg" class="rounded" alt="banner">
+		</div>
 	</header>
 	
-	<nav>
-		<div th:if="${session.usertype} eq patient">
-			<ul>
-				<li>Book new <a href="book-an-appointment">appointment</a></li>
-				<li>View <a href="view-appointments">appointments</a></li>
-				<li><a href="logout">Logout</a></li>
-			</ul>
-		</div>
-		
-		<div th:if="${session.usertype} eq doctor">
-			<ul>
-				<li>View <a href="view-appointments">appointments</a></li>
-				<li><a href="logout">Logout</a></li>
-			</ul>
-		</div>
-	</nav>
-
+	<div class="container-lg">
+		<nav class=" navbar navbar-expand-sm bg-dark navbar-dark justify-content-center" 
+			th:if="${session.usertype} eq patient">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="book-an-appointment">Book new appointment</a></li>
+					<li class="nav-item"><a class="nav-link" href="view-appointments">View appointments</a></li>
+					<li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+				</ul>
+		</nav>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center" 
+			th:if="${session.usertype} eq doctor">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="view-appointments">View appointments</a></li>
+					<li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+				</ul>
+		</nav>
+	</div>
 	
 	<main>
 		<div th:if="${session.usertype} eq patient">
@@ -48,12 +56,21 @@
 			<h1 th:text="'Welcome back, Dr. ' + *{firstName} + ' ' + *{lastName}" th:object="${retrievedDoctor}"></h1>
 		</div>
 		
-		<p th:if="${session.loginStatus == 'success' && session.bookStatus != 'success' && session.cancelStatus != 'success'}" 
-			th:text="'Login successfully.'"></p>
-		<p th:if="${session.bookStatus == 'success' && session.cancelStatus != 'success'}"
-			th:text="'Booked successfully'">
-		<p th:if="${session.cancelStatus == 'success'}"
-			th:text="'Cancelled successfully'">
+		<div class="row justify-content-center"> 
+			<div class="col-3">
+				<p class="alert alert-info" role="alert" 
+					th:if="${session.loginStatus == 'success' && session.bookStatus != 'success' && session.cancelStatus != 'success'}" 
+					th:text="'Login successfully.'"></p>
+					
+				<p class="alert alert-info" role="alert" 
+					th:if="${session.bookStatus == 'success' && session.cancelStatus != 'success'}"
+					th:text="'Booked successfully'"></p>
+					
+				<p class="alert alert-info" role="alert" 
+					th:if="${session.cancelStatus == 'success'}"
+					th:text="'Cancelled successfully'"></p>
+			</div>
+		</div>
 	</main>
 	
 	<footer>

@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fdmgroup.appointmentbooking.exception.DoctorNotFoundException;
 import com.fdmgroup.appointmentbooking.model.Doctor;
 import com.fdmgroup.appointmentbooking.repo.DoctorRepository;
 
@@ -68,8 +69,7 @@ public class DoctorService {
 		if (retrievedDoctor.isPresent()) {
 			return retrievedDoctor.get();
 		}
-		return new Doctor();
-//		return retrievedDoctor.orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + doctorID + "does not exist"));
+		return retrievedDoctor.orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + doctorID + "does not exist"));
 	}
 	
 	public Doctor retrieveDoctorByEmail(String email) {
@@ -77,7 +77,7 @@ public class DoctorService {
 		if(retrievedDoctor.isPresent()) {
 			return retrievedDoctor.get();
 		}
-		return new Doctor();
+		return retrievedDoctor.orElseThrow(() -> new DoctorNotFoundException("Doctor with email " + email + "does not exist"));
 	}
 	
 	public long retrieveIdByEmail(String email) {

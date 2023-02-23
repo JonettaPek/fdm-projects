@@ -54,7 +54,7 @@ public class WebsiteController {
 	}
 	
 	@PostMapping("/register-patient")
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String handlePatientRegistration(@RequestParam("confirm-password") String confirmPassword,
 			Patient patient,
 			HttpSession registerSession,
@@ -80,7 +80,8 @@ public class WebsiteController {
 	}
 	
 	@PostMapping("/register-doctor")
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.SEE_OTHER
+			)
 	public String handleDoctorRegistration(@RequestParam("confirm-password") String confirmPassword,
 			Doctor doctor,
 			HttpSession registerSession) {
@@ -118,7 +119,7 @@ public class WebsiteController {
 	}
 	
 	@PostMapping("/login")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String handleLogin(@RequestParam("e-mail") String email,
 			@RequestParam("password") String password,
 			@RequestParam("user-type") String userType,

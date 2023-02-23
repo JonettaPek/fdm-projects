@@ -32,7 +32,7 @@ public class PatientController {
 	}
 	
 	@GetMapping("/{username}")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String goToPatientHomePage(HttpSession loginSession,
 			Model model) {
 		String email = (String) loginSession.getAttribute("email");
@@ -55,7 +55,7 @@ public class PatientController {
 	}
 	
 	@PostMapping("/book-an-appointment")
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String handleNewAppointment(Appointment appointment,
 			HttpSession loginSession) {
 		long patientID = (Long) loginSession.getAttribute("patientID");
@@ -88,6 +88,7 @@ public class PatientController {
 	}
 	
 	@PostMapping("/cancel-an-appointment")
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String handleCancellation(@RequestParam("appointment-id") String appointmentIdString,
 			HttpSession loginSession) {
 		Long appointmentID = Long.parseLong(appointmentIdString);
@@ -103,7 +104,7 @@ public class PatientController {
 	}
 	
 	@GetMapping("/logout")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String logout(HttpSession loginSession) {
 		loginSession.invalidate();
 		return "redirect:/my-first-clinic/";

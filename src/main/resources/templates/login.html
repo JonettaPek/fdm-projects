@@ -17,33 +17,79 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
 		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" 
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" 
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" 
+	integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" 
+	crossorigin="anonymous"></script>
 
 	<header>
-		<h1>Login</h1> <!-- replace with a logo image -->
+		<div class="justify-content-center text-center">
+		  <img src="banner.jpg" class="rounded" alt="logo">
+		</div>
+		
+		<div class="row">
+			<div class="d-flex justify-content-center" >
+				<h1>Login</h1>
+			</div>
+		</div>
 	</header>
 	
 	<main> 
-		<p th:if="${registerStatus == 'success' && loginStatus != 'fail'}" th:text="${registerInfoMessage}"></p>
+		<div class="row">
+			<div class="d-flex justify-content-center" >
+				<p class="alert alert-success" role="alert" 
+					th:if="${registerStatus == 'success' && loginStatus != 'fail'}" th:text="${registerInfoMessage}"></p>
+			</div>
+		</div>
+		
 		<form method="post" action="login">
-			<label for="mail">Email: </label>
-			<input id="mail"type="email" name="e-mail" placeholder="Email" th:value="${email}" required/>
-			<br>
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<label class="form-label" for="mail">Email</label>
+					<input class="form-control" id="mail"type="email" name="e-mail" placeholder="Email" th:value="${email}" required/>
+					<br>
+				</div>
+			</div>
 			
-			<label for="pw">Password: </label>
-			<input id="pw" type="password" name="password" placeholder="Password" th:value="${password}" required/>
-			<span th:if="${loginStatus} eq fail" th:text="'Fail to login, email may not exist or password may be incorrect, please try again.'"></span>
-			<br>
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<label class="form-label" for="pw">Password</label>
+					<input class="form-control" id="pw" type="password" name="password" placeholder="Password" th:value="${password}" required/>
+					<br>
+				</div>
+			</div>
 			
-			<label>Login as: </label>
-			<label><input type="radio" name="user-type" value="patient" required/> Patient</label>
-			<label><input type="radio" name="user-type" value="doctor" required/> Doctor</label>
-			<br>
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<label class="form-label">Login as: </label>
+					<label class="form-check-label"><input class="form-check-input" type="radio" name="user-type" value="patient" required/> Patient</label>
+					<label class="form-check-label"><input class="form-check-input" type="radio" name="user-type" value="doctor" required/> Doctor</label>
+					<br>
+				</div>
+			</div>
 			
-			<input type="submit" value="Login" />
-			
-			<br>
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<input class="form-control btn btn-primary" type="submit" value="Login" />
+					<br>
+				</div>
+			</div>
+
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<a href="reset-password">Forget password</a>
+					<br>
+				</div>
+			</div>			
 		</form>
-		<a href="reset-password">Forget password</a>
+		
+		<div class="row">
+			<div class="d-flex justify-content-center" >
+				<p class="alert alert-danger" role="alert" th:if="${loginStatus} eq fail" 
+					th:text="'Fail to login, email may not exist or password may be incorrect, please try again.'"></p>
+		</div>
 	</main>
 	
 	<footer>
