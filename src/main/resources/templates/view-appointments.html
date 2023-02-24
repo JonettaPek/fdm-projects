@@ -36,9 +36,12 @@
 			</div>
 		</div>
 		
+		
 		<div class="row justify-content-center"> 
 			<div class="col-3">
-				<p th:if="${appointments} eq null">No appointments</p>
+				<div th:if="${appointments} eq null">
+					<p>No appointments</p>
+				</div>
 			</div>
 		</div>
 		

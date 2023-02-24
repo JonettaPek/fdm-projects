@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.fdmgroup.appointmentbooking.model.DataTransferObject;
 import com.fdmgroup.appointmentbooking.model.Doctor;
 import com.fdmgroup.appointmentbooking.model.Patient;
 import com.fdmgroup.appointmentbooking.service.DoctorService;
