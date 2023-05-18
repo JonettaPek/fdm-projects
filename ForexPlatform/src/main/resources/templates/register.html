@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Register</title>
+</head>
+
+<body>
+	<header>
+		<img src="" alt="logo" />
+	</header>
+	<nav>
+		
+	</nav>
+	<main>
+		<form method="post" th:action="@{register}" th:object="${newTrader}">
+			<label for="fname">First Name</label>
+			<input id="fname" type="text" th:field="*{firstName}" placeholder="e.g. John" required/>
+			<br>
+			
+			<label for="lname">Last Name</label>
+			<input id="lname" type="text" th:field="*{lastName}" placeholder="e.g. Doe" required/>
+			<br>
+			
+			<label for="mail">Email</label>
+			<input id="mail" type="email" th:field="*{email}" placeholder="e.g. johndoe@gmail.com" required/>
+			<br>
+			
+			<label for="pw">Password</label>
+			<input id="pw" type="password" th:field="*{password}" required/>
+			<br>
+			
+			<label for="cpw">Retype Password</label>
+			<input id="cpw" type="password" name="confirm-password" required/>
+			<br>
+			
+			<input type="submit" value="Register"/>
+			<br>
+			
+		</form>
+	</main>
+	<footer>
+	
+	</footer>
+</body>
+
+</html>
