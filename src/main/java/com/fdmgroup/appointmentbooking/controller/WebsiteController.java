@@ -79,8 +79,7 @@ public class WebsiteController {
 	}
 	
 	@PostMapping("/register-doctor")
-	@ResponseStatus(HttpStatus.SEE_OTHER
-			)
+	@ResponseStatus(HttpStatus.SEE_OTHER)
 	public String handleDoctorRegistration(@RequestParam("confirm-password") String confirmPassword,
 			Doctor doctor,
 			HttpSession registerSession) {
