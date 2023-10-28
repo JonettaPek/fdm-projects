@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+</head>
+
+<body>
+	<header>
+		<img src="" alt="banner" />
+	</header>
+	<nav>
+		<ul>		
+			<li><a href="topup">Top up wallet</a></li>
+			<li><a href="refund">Transfer to bank</a></li>
+			<li><a href="wallet">View wallet</a></li>
+			<li><a href="order">Create new order</a></li>
+			<li><a href="board">Order board</a></li>			
+			<li><a href="portfolio">View portfolio</a></li>
+			<li><a href="logout">Logout</a></li>
+		</ul>
+	</nav>
+	<main>
+		<h1 th:object="${trader}" th:text="'Welcome back, ' + ${trader.firstName} + ' ' + ${trader.lastName}"></h1>
+	</main>
+	<footer>
+	
+	</footer>
+</body>
+
+</html>

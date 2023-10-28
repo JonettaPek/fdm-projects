@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# fdm-projects
-=======
 # forex-platform
 Features  
 1.       Users must login to trade on their account  
@@ -12,4 +9,3 @@ Features
   b.       If a buy order has a volume of 100 units and there are 2 sell orders with 30 units and 60 units at the same price, 90 units are exchanged  
 6.       Users should be able to make spot trades(market orders, limit buy/sell) and forward trades  
 7.       Get the latest currency rates using an API  
->>>>>>> fx
