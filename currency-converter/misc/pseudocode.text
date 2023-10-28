@@ -1,0 +1,7 @@
+Things to note:
+- Use relative file paths
+- Create log files 
+- Create custom exceptions
+- Annotate .json files
+- Create HTML documentation using JavaDoc
+- Use SOLID framework to design API, design pattern used, if any: Command

@@ -1,0 +1,14 @@
+Week 3 Grading Criteria
+Does It Read User Wallets & Use Data [not hardcoded]?
+Does It Read Conversion Rates & Use Data [not hardcoded]?
+Does It Read Transactions & Use Data [not hardcoded]?
+Is The FROM Money Withdrawal Calculation Correct?
+Calculation of Converted FROM Money Deposit Correct?
+Does It Deposit The Correct TO Money?
+Are **All** The Conversions For The User Wallets Correct?
+Does It Update The users.json File Correctly [maintain format]?
+Does It Skip The Transaction If There Is Insufficient FROM Currency [And Log It]?
+Does It Skip The Transaction If FROM Currency Doesn't Exist In User Wallet [And Log It]?
+Does It Skip The Transaction If User Doesn’t Exist in The Users Wallets [And Log It]?
+Is The Logging To Console and A File Clear And Appropriate?
+Does The Source Code Follow Coding Best Practices?

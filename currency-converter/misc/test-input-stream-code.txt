@@ -1,0 +1,27 @@
+//		if ( names.contains(transaction.getUser().getName()) ) {
+//			if ( transaction.getUser().getWallet().containsKey(transaction.getFromCurrency()) ) {
+//				
+//			}
+//		} else {
+//			continue;
+//		}
+		
+//		for ( User user : users ) {
+//			System.out.println(user.getName());
+//			System.out.println(user.getWallet());
+//			System.out.println(user.getCurrencyAmount("usd"));
+//		}
+		
+		
+		
+//		System.out.println(currency.getRate());
+//		System.out.println(currency.getInverseRate());
+		
+		
+		
+//		for ( Transaction transaction : transactions ) {
+//			System.out.println(transaction.getUser());
+//			System.out.println(transaction.getFromCurrency());
+//			System.out.println(transaction.getToCurrency());
+//			System.out.println(transaction.getAmountToConvert());
+//		}
