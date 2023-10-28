@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	
+<head>
+	<meta charset="UTF-8">
+	<title>Refund</title>
+</head>
+
+<body>
+	<header>
+		
+	</header>
+	<nav>
+		
+	</nav>
+	<main>
+		<form method="post" th:action="@{refund}" th:object="${refundDetail}">
+			<label for="currency">Currency</label>
+			<select id="currency" th:field="*{currencyCode}" required>
+				<option th:each="code : ${refundCurrencies}" th:value="${code}"  th:text="${code}"></option>
+			</select>
+			<br>
+			
+			<label for="amt">Refund Amount</label>
+			<input id="amt" type="number" th:field="*{amount}" min="1" required/>
+			<br>
+			
+			<input type="submit" value="Refund" />
+		</form>
+	</main>
+	<footer>
+		
+	</footer>
+</body>
+
+</html>

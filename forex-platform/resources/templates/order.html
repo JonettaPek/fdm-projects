@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>New Order</title>
+	<link href="css/style.css" type="text/css" rel="stylesheet"/>
+<!--	<script src="js/order.js"></script> 
+	<script>
+		var today = new Date();
+		document.getElementById("orderdate").setAttribute("value", today);
+	</script> -->
+		
+</head>
+
+<body>
+	<header>
+		<img src="" alt="banner"/>
+	</header>
+	<nav>
+		
+	</nav>
+	<main>
+		<form method="post" th:action="@{order}" th:object="${newOrder}">
+			<label for="trader">Trader ID </label>
+			<input id="trader" type="number" th:value="${traderID}" readonly/>
+			<br>
+			
+			<label for="ordertype">Order Type</label>
+			<select id="ordertype" th:field="*{orderType}" required>
+				<option th:value="'market'" th:text="'Market Order'"></option>
+				<option th:value="'limit'" th:text="'Limit Order'"></option>
+				<option th:value="'forward'" th:text="'Market Order'"></option>
+			</select>
+			<br>
+			
+			<label for="side">Side</label>
+			<select id="side" th:field="*{sideType}" required>
+				<option th:value="'buy'" th:text="Buy"></option>
+				<option th:value="'sell'" th:text="Sell"></option>
+			</select>
+			<br>
+			
+			<label for="currency">Currency</label>
+			<select id="currency" th:field="*{currencyCode}" required>
+				<option th:each="code : ${buySellCurrencies}" th:value="${code}" th:text="${code}"></option>
+			</select>
+			<br>
+<!--		
+			<label for="currency">Currency</label>
+			<select id="currency" th:field="*{currencyCode}" required>
+				<option th:value="USD" th:text="'USD'"></option>
+				<option th:value="EUR" th:text="'EUR'"></option>
+				<option th:value="SGD" th:text="'SGD'"></option>	
+				<option th:value="JPY" th:text="'JPY'"></option>
+				<option th:value="AUD" th:text="'AUD'"></option>
+				<option th:value="KRW" th:text="'KRW'"></option>
+				<option th:value="CNY" th:text="'CNY'"></option>
+				<option th:value="HKD" th:text="'HKD'"></option>
+				<option th:value="MYR" th:text="'MYR'"></option>
+			</select>
+			<br>
+-->			
+<!--
+			<label for="price">Unit Price</label>
+			<input id="price" type="number" th:field="*{specifiedPrice}"/>
+			<br>
+-->		
+			<label for="qty">Quantity</label>
+			<input id="qty" type="number" th:field="*{quantity}" min="10" step="10"/>
+			<br>
+			
+			
+			<button type="submit">Order</button>
+		</form>
+	</main>
+	<footer>
+	
+	</footer>
+</body>
+
+</html>

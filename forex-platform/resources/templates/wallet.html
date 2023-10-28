@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thhymeleaf.org">
+	
+<head>
+	<meta charset="UTF-8">
+	<title>Wallet</title>
+</head>
+
+<body>
+	<header>
+		
+	</header>
+	<nav>
+		
+	</nav>
+	<main>
+		<table>
+			<tr>
+				<th th:text="'Currency'"></th>
+				<th th:text="'Amount'"></th>
+			</tr>
+			<tr th:each="balance : ${balances}">
+				<td th:text="${balance.currencyCode}"></td>
+				<td th:text="${balance.amount}"></td>
+			</tr>
+			<tr>
+				<th th:text="'Total Value (in USD)'"></th>
+				<td th:text="${totalValue}"></td>
+			</tr>
+		</table>
+		<a href="home">Home</a>
+	</main>
+	<footer>
+		
+	</footer>
+</body>
+
+</html>

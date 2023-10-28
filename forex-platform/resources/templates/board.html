@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	<meta charset="UTF-8">
+	<title>Order Board</title>
+</head>
+
+<body>
+	<header>
+		
+	</header>
+	<nav>
+		
+	</nav>
+	<main>
+		<table>
+			<tr>
+				<th>Order Type</th>
+				<th>Side Type</th>
+				<th>Currency</th>
+				<th>Price</th>
+				<th>Quantity</th>
+			</tr>
+			<tr th:each="order : ${pendingOrders}">
+				<td th:text="${order.orderType}"></td>
+				<td th:text="${order.sideType}"></td>
+<!--				
+				<td th:text="${order.status}"></th>
+				<td th:text="${order.orderDate}"></th>
+				<td th:text="${order.expiryDate}"></th>
+-->				
+				<td th:text="${order.currencyCode}"></td>
+				<td th:text="${order.specifiedPrice}"></th>
+				<td th:text="${order.quantity}"></td>
+			</tr>
+		</table>
+	</main>
+	<footer>
+		
+	</footer>
+</body>
+
+</html>
