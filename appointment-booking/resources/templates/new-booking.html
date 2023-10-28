@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>New Booking</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
+	rel="stylesheet" 
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
+	crossorigin="anonymous">
+</head>
+
+<body>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" 
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" 
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" 
+	integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" 
+	crossorigin="anonymous"></script>
+	
+	<header>
+		<div class="justify-content-center text-center">
+			<img src="banner.jpg" class="rounded" alt="banner">
+		</div>
+		<div class="row">
+			<div class="d-flex justify-content-center" >
+				<h1>New Booking</h1>
+			</div>
+		</div>
+	</header>
+	
+	<main>
+		<form method="post" th:action="@{book-an-appointment}" th:object="${appointment}">
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<label class="form-label" for="date">Select a date: </label>
+					<input class="form-control" id="date" name="date-of-visit" th:field="*{dateOfVisit}" type="date" min="2023-01-01" max="2023-02-20" required>
+					<br>
+				</div>
+			</div>
+			
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<label class="form-label">Select a timeslot: </label><br>
+					
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="09:00-10:00" required/>
+						 09:00 - 10:00</label>
+						<br>
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="10:00-11:00" required/>
+						 10:00 - 11:00</label>
+						<br>
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="11:00-12:00" required/>
+						 11:00 - 12:00</label>
+						<br>
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="13:00-14:00" required/>
+						 13:00 - 14:00</label>
+						<br>
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="14:00-15:00" required/>
+						 14:00 - 15:00</label>
+						<br>
+					<label class="form-check-label">
+						<input class="form-check-input" type="radio" name="time-of-visit" th:field="*{timeOfVisit}" value="15:00-16:00" required/>
+						 15:00 - 16:00</label>
+						<br>
+				</div>
+			</div>
+
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<label class="form-label" for="locatn"><strong>Select a branch: </strong></label>
+					<select class="form-select" id="locatn" name="location">
+						<option th:field="*{location}" value="Branch A">Branch A</option>
+						<option th:field="*{location}" value="Branch B">Branch B</option>
+						<option th:field="*{location}" value="Branch C">Branch C</option>
+						<option th:field="*{location}" value="Branch D">Branch D</option>
+						<option th:field="*{location}" value="Branch E">Branch E</option>
+						<option th:field="*{location}" value="Branch F">Branch F</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row justify-content-center"> 
+				<div class="col-3">
+					<input class="form-control btn btn-primary" type="submit" value="Book"/>
+				</div>
+			</div>
+		</form>
+	</main>
+	
+</body>
+</html>

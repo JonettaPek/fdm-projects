@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
+		crossorigin="anonymous">
+</head>
+
+
+<body>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" 
+	integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" 
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" 
+	integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" 
+	crossorigin="anonymous"></script>
+
+	<header>
+		<div class="justify-content-center text-center">
+		  <img src="banner.jpg" class="rounded" alt="banner">
+		</div>
+	</header>
+	
+	<div class="container-lg">
+		<nav class=" navbar navbar-expand-sm bg-dark navbar-dark justify-content-center" 
+			th:if="${session.usertype} eq patient">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="book-an-appointment">Book new appointment</a></li>
+					<li class="nav-item"><a class="nav-link" href="view-appointments">View appointments</a></li>
+					<li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+				</ul>
+		</nav>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center" 
+			th:if="${session.usertype} eq doctor">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="view-appointments">View appointments</a></li>
+					<li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+				</ul>
+		</nav>
+	</div>
+	
+	<main>
+		<div th:if="${session.usertype} eq patient">
+			<h1 th:text="'Welcome back, ' + *{firstName} + ' ' + *{lastName}" th:object="${retrievedPatient}"></h1>
+		</div>
+		
+		<div th:if="${session.usertype} eq doctor">
+			<h1 th:text="'Welcome back, Dr. ' + *{firstName} + ' ' + *{lastName}" th:object="${retrievedDoctor}"></h1>
+		</div>
+		
+		<div class="row justify-content-center"> 
+			<div class="col-3">
+				<p class="alert alert-info" role="alert" 
+					th:if="${session.loginStatus == 'success' && session.bookStatus != 'success' && session.cancelStatus != 'success'}" 
+					th:text="'Login successfully.'"></p>
+					
+				<p class="alert alert-info" role="alert" 
+					th:if="${session.bookStatus == 'success' && session.cancelStatus != 'success'}"
+					th:text="'Booked successfully'"></p>
+					
+				<p class="alert alert-info" role="alert" 
+					th:if="${session.cancelStatus == 'success'}"
+					th:text="'Cancelled successfully'"></p>
+			</div>
+		</div>
+	</main>
+	
+	<footer>
+	
+	</footer>
+	
+</body>
+</html>
